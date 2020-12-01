@@ -155,7 +155,7 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
                                 email.getEditText().getText().clear();
                                 lon.getEditText().getText().clear();
                                 let.getEditText().getText().clear();
-
+////
                             }
                         });
                 builder.setNeutralButton("CANCEL",
