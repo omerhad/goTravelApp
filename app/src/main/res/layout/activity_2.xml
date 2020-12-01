@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background3jpeg"
+    tools:context=".ui.AddTravelActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="720dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:freezesText="true"
+            android:text="create order"
+            android:textColor="#FF9800"
+            android:textSize="55sp" />
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/name1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:errorEnabled="true">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:textColor="#F80505"
+            android:textColorHint="#CD1616"
+
+            android:textSize="24sp" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phone1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:counterMaxLength="10">
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="phone number"
+            android:inputType="phone"
+            android:textColor="#F80505"
+            android:textColorHint="#E41313"
+            android:textSize="24sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/let1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+        <EditText
+            android:id="@+id/let"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="let number"
+            android:inputType="phone"
+            android:textColor="#F80505"
+            android:textColorHint="#E41313"
+            android:textSize="24sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lon1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+        <EditText
+            android:id="@+id/lon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="lon number"
+            android:inputType="phone"
+            android:textColor="#F80505"
+            android:textColorHint="#E41313"
+            android:textSize="24sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="#F80505"
+            android:textColorHint="#EA0C0C"
+            android:textSize="24sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/date_source"
+            android:layout_width="162dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Start Date"
+            android:startYear="2020"
+            app:backgroundTint="#A33838" />
+        <Button
+            android:id="@+id/date_destination"
+            android:layout_width="162dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="End Date"
+            android:startYear="2020"
+            app:backgroundTint="#A33838" />
+
+        <Spinner
+            android:id="@+id/status"
+            android:layout_width="162dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="status"
+            app:backgroundTint="#A33838"/>
+
+        <ImageButton
+            android:id="@+id/gotravel"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:accessibilityHeading="false"
+            android:adjustViewBounds="true"
+            android:baselineAlignBottom="true"
+            android:cropToPadding="true"
+            android:contentDescription="Click to confirm"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="onClick"
+            app:srcCompat="@drawable/ok2" />
+
+    </LinearLayout>
+
+</ScrollView>
