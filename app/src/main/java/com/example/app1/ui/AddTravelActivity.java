@@ -36,8 +36,7 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
     private TextInputLayout lon;
     private Spinner status;
     //private TravelDataSource traveldatasource;
-
-
+   //
     private Date start;
     private Date End;
     Button dateStart;
