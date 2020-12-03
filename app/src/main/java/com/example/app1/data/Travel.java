@@ -140,7 +140,7 @@ public class Travel {
 
 
     public enum RequestType {
-        sent(0), accepted(1), run(2), close(3);
+        sent(0), accepted(1), run(2), close(3),payed(4);
         public Integer code;
         RequestType(Integer value) {
             this.code = value;
