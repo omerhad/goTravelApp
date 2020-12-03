@@ -1,12 +1,11 @@
 package com.example.app1.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-//import androidx.lifecycle.ViewModelProviders;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,23 +16,32 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+
 import com.example.app1.R;
 import com.example.app1.data.Travel;
 import com.example.app1.data.UserLocation;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+//import androidx.lifecycle.ViewModelProviders;
 
 public class AddTravelActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+    UserLocation user;
     private TravelViewModel travelViewModel;
-
+    Location travelLocation;
     private Travel travel;
     private TextInputLayout name;
     private TextInputLayout phone;
     private TextInputLayout email;
-    private TextInputLayout let;
-    private TextInputLayout lon;
+    private TextInputLayout des;
+    private String travelAddress;
     private Spinner status;
     //private TravelDataSource traveldatasource;
    //
@@ -73,8 +81,7 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
         name= findViewById(R.id.name1);
         phone=findViewById(R.id.phone1);
         email=findViewById(R.id.email1);
-        let=findViewById(R.id.let1);
-        lon=findViewById(R.id.lon1);
+        des= findViewById(R.id.destination);
         goTravel=(ImageButton)findViewById(R.id.gotravel);
         dateStart=(Button)findViewById(R.id.date_source);
         dateStop=(Button)findViewById(R.id.date_destination);
@@ -122,7 +129,7 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
         goTravel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validEmail() | !validLet() | !validLon() | !validName() | !validPhone()){
+                if(!validEmail() | !validDes() | !validName() | !validPhone()){
                     return;
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -136,24 +143,29 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
                                 Toast.makeText(getApplicationContext(),"No is clicked",Toast.LENGTH_LONG).show();
                             }
                         });
+
                 builder.setPositiveButton("YES",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int which) {
-                                Toast.makeText(getApplicationContext(),"Yes is clicked",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Yes is clicked", Toast.LENGTH_LONG).show();
                                 travel.setClientName(name.getEditText().getText().toString().trim());
                                 travel.setClientPhone(phone.getEditText().getText().toString().trim());
                                 travel.setClientEmail(email.getEditText().getText().toString().trim());
-                                travel.setTravelLocation(new UserLocation(Double.parseDouble(let.getEditText().getText().toString().trim()),Double.parseDouble(lon.getEditText().getText().toString().trim())));
-                                // travel.setRequesType(1);
+                                travelAddress = des.getEditText().getText().toString().trim();
+                                user=new UserLocation();
+                                travel.setTravelLocation(user.convertFromLocation(submitted()));
+
+
+                            // travel.setRequesType(1);
                                 travel.setTravelDate(start);
                                 travel.setArrivalDate(End);
                                 travelViewModel.travelrepositorye.addTravel(travel);
                                 name.getEditText().getText().clear();
                                 phone.getEditText().getText().clear();
                                 email.getEditText().getText().clear();
-                                lon.getEditText().getText().clear();
-                                let.getEditText().getText().clear();
+                                des.getEditText().getText().clear();
+
 ////
                             }
                         });
@@ -171,6 +183,30 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
+    public Location submitted(){
+        try {
+            Geocoder geocoder = new Geocoder(getBaseContext());
+            List<Address> l = geocoder.getFromLocationName(travelAddress, 1);
+            if (!l.isEmpty()) {
+                Address temp =
+                        l.get(0);
+                travelLocation = new Location("travelLocation");
+                travelLocation.setLatitude(temp.getLatitude());
+                travelLocation.setLongitude(temp.getLongitude());
+                return  travelLocation;
+            } else {
+                Toast.makeText(this, "4:Unable to understand address", Toast.LENGTH_LONG).show();
+                des.setError("4:Unable to understand address");
+
+                return null;
+
+            }
+        } catch (IOException e) {
+            Toast.makeText(this, "5:Unable to understand address. Check Internet connection.", Toast.LENGTH_LONG).show();
+            des.setError("5:Unable to understand address. Check Internet connection.");
+            return null;
+        }
+}
 private boolean validEmail(){
         String emailInput=email.getEditText().getText().toString().trim();
         if (emailInput.isEmpty()){
@@ -194,27 +230,17 @@ private boolean validEmail(){
         }
     }
 
-    private boolean validLon(){
-        String lonInput=lon.getEditText().getText().toString().trim();
+    private boolean validDes(){
+        String lonInput=des.getEditText().getText().toString().trim();
         if (lonInput.isEmpty()){
-            lon.setError("Field can't be empty");
+            des.setError("Field can't be empty");
             return false;
         }else {
-            lon.setError(null);
+          des.setError(null);
             return true;
         }
     }
 
-    private boolean validLet(){
-        String letInput=let.getEditText().getText().toString().trim();
-        if (letInput.isEmpty()){
-            let.setError("Field can't be empty");
-            return false;
-        }else {
-            let.setError(null);
-            return true;
-        }
-    }
 
     private boolean validPhone(){
         String phoneInput=phone.getEditText().getText().toString().trim();

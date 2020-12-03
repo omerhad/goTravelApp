@@ -62,7 +62,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/let1"
+            android:id="@+id/destination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true">
@@ -71,8 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="let number"
-            android:inputType="phone"
+            android:hint="destination"
             android:textColor="#F80505"
             android:textColorHint="#E41313"
             android:textSize="24sp" />
@@ -83,18 +82,7 @@
             android:id="@+id/lon1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true">
-        <EditText
-            android:id="@+id/lon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="lon number"
-            android:inputType="phone"
-            android:textColor="#F80505"
-            android:textColorHint="#E41313"
-            android:textSize="24sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:errorEnabled="true"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email1"
