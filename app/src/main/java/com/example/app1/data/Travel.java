@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -140,8 +141,19 @@ public class Travel {
 
 
     public enum RequestType {
-        sent(0), accepted(1), run(2), close(3),payed(4);
+        sent("0"),
+        accepted("1"),
+        run(2),
+        close(3),
+        payed(4);
+
         public Integer code;
+        private String str;
+
+        private RequestType(String friendlyName){
+            this.str = friendlyName;
+        }
+
         RequestType(Integer value) {
             this.code = value;
         }
@@ -160,6 +172,12 @@ public class Travel {
             if (requestType != null)
                 return requestType.code;
             return null;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return str;
         }
     }
 
