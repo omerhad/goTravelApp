@@ -75,14 +75,15 @@
             android:textColor="#F80505"
             android:textColorHint="#E41313"
             android:textSize="24sp" />
-
+            <Button
+                android:id="@+id/add_des"
+                android:layout_width="162dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="addAddress"
+                android:text="add more destination"
+                app:backgroundTint="#A33838" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lon1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email1"

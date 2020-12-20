@@ -1,24 +1,22 @@
 package com.example.app1.ui;
 
 
-import android.app.Application;
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.app1.Repository.TravelDataSource;
 import com.example.app1.Repository.TravelRepository;
+import com.example.app1.data.Travel;
 
 public class TravelViewModel extends ViewModel {
     String TAG = "elyasaf";
-    TravelRepository travelrepositorye;
+    private TravelRepository travelrepositorye;
     //Context r = getApplication();
     public TravelViewModel() {
         travelrepositorye=new TravelRepository();
+    }
+    public void addTravel(Travel travel){
+        travelrepositorye.addTravel(travel);
     }
 
     LiveData<Boolean> getIsSuccess() {

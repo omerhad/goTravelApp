@@ -1,14 +1,14 @@
 package com.example.app1.Repository;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.app1.data.Travel;
+import com.example.app1.data.TravelDataSource;
 
 public class TravelRepository {
 
 
-    private  TravelDataSource travelDataSource;
+    private TravelDataSource travelDataSource;
     public TravelRepository()
     {
         travelDataSource =new TravelDataSource();

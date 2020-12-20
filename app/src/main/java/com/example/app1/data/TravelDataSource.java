@@ -1,12 +1,8 @@
-package com.example.app1.Repository;
-
-import android.util.Log;
-import android.widget.Toast;
+package com.example.app1.data;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.app1.data.Travel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -14,8 +10,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class TravelDataSource {
 
@@ -30,18 +24,7 @@ public class TravelDataSource {
         void change();
     }
 
-    private changedListener listener;
 
-    public void setChangedListener(changedListener l) {
-        listener = l;
-    }
-
-
-    public List<Travel> getTravelsList() {
-        return travelsList;
-    }
-
-    List<Travel> travelsList;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference travels = firebaseDatabase.getReference("ExistingTravels");
 

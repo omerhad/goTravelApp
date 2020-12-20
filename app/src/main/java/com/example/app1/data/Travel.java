@@ -7,6 +7,7 @@ import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Travel {
         this.clientEmail = clientEmail;
     }
 
-    public void setTravelLocation(UserLocation travelLocation) {
+    public void setTravelLocation(List<UserLocation> travelLocation) {
         this.travelLocation = travelLocation;
     }
 
@@ -58,7 +59,7 @@ public class Travel {
     }
 
     @TypeConverters(UserLocationConverter.class)
-    private UserLocation travelLocation;
+    private   List<UserLocation> travelLocation;
 
     @TypeConverters(RequestType.class)
     private RequestType requesType;
@@ -90,7 +91,7 @@ public class Travel {
         return clientEmail;
     }
 
-    public UserLocation getTravelLocation() {
+    public List<UserLocation> getTravelLocation() {
         return travelLocation;
     }
 
@@ -110,13 +111,13 @@ public class Travel {
         return company;
     }
 
-    public Travel() {
+    public Travel(List<UserLocation> dst) {
         this.arrivalDate=new Date(12/12/2020);
         this.clientEmail=" ";
         this.clientName=" ";
         this.clientPhone=" ";
         this.travelDate=new Date(12/12/2021);
-        this.travelLocation= new UserLocation(2,2);
+        this.travelLocation= new ArrayList<>(dst);
     }
 
     public void setTravelId(String id) {

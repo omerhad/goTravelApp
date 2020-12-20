@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
@@ -26,6 +27,7 @@ import com.example.app1.data.UserLocation;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +44,7 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
     private TextInputLayout email;
     private TextInputLayout des;
     private String travelAddress;
+    private List<UserLocation> destAddressArr = new ArrayList<UserLocation>();
     private Spinner status;
     //private TravelDataSource traveldatasource;
    //
@@ -61,6 +64,7 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_2);
         //TODO its a diffrent version
         travelViewModel  = new TravelViewModel();
+        user=new UserLocation();
        String TAG = this.getClass().getSimpleName();
         final MutableLiveData<Boolean> success= (MutableLiveData<Boolean>) travelViewModel.getIsSuccess();
         success.observe(this, new Observer<Boolean>() {
@@ -76,7 +80,6 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
 //        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item,Travel.RequestType.values());
 //        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        status.setAdapter(aa);
-        travel = new Travel();
 
         name= findViewById(R.id.name1);
         phone=findViewById(R.id.phone1);
@@ -149,18 +152,19 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
                             public void onClick(DialogInterface dialog,
                                                 int which) {
                                 Toast.makeText(getApplicationContext(), "Yes is clicked", Toast.LENGTH_LONG).show();
+                                travelAddress = des.getEditText().getText().toString().trim();
+                                destAddressArr.add(user.convertFromLocation(submitted()));
+                                travel= new Travel(destAddressArr);
                                 travel.setClientName(name.getEditText().getText().toString().trim());
                                 travel.setClientPhone(phone.getEditText().getText().toString().trim());
                                 travel.setClientEmail(email.getEditText().getText().toString().trim());
-                                travelAddress = des.getEditText().getText().toString().trim();
-                                user=new UserLocation();
-                                travel.setTravelLocation(user.convertFromLocation(submitted()));
+
 
 
                             // travel.setRequesType(1);
                                 travel.setTravelDate(start);
                                 travel.setArrivalDate(End);
-                                travelViewModel.travelrepositorye.addTravel(travel);
+                                travelViewModel.addTravel(travel);
                                 name.getEditText().getText().clear();
                                 phone.getEditText().getText().clear();
                                 email.getEditText().getText().clear();
@@ -187,9 +191,9 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
         try {
             Geocoder geocoder = new Geocoder(getBaseContext());
             List<Address> l = geocoder.getFromLocationName(travelAddress, 1);
+
             if (!l.isEmpty()) {
-                Address temp =
-                        l.get(0);
+                Address temp = l.get(0);
                 travelLocation = new Location("travelLocation");
                 travelLocation.setLatitude(temp.getLatitude());
                 travelLocation.setLongitude(temp.getLongitude());
@@ -207,6 +211,30 @@ public class AddTravelActivity extends AppCompatActivity implements View.OnClick
             return null;
         }
 }
+
+    /**
+     * add the pickupp destanation address from the edit text to the user location list and empty the edit text
+     * @param view
+     */
+    public void addAddress(View view) {
+        try {
+
+
+            if (des.getEditText().getText().toString().isEmpty())
+                Toast.makeText(this, "enter a destination address", Toast.LENGTH_LONG).show();
+            else {
+                travelAddress = des.getEditText().getText().toString().trim();
+                destAddressArr.add(user.convertFromLocation(submitted()));
+
+                des.getEditText().getText().clear();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
 private boolean validEmail(){
         String emailInput=email.getEditText().getText().toString().trim();
         if (emailInput.isEmpty()){
@@ -262,8 +290,8 @@ private boolean validEmail(){
             }
         }
 
-    MutableLiveData<Boolean> getIsSuccess() {
-        return travelViewModel.travelrepositorye.getIsSuccess();
+    LiveData<Boolean> getIsSuccess() {
+        return travelViewModel.getIsSuccess();
     }
 //
     @Override
