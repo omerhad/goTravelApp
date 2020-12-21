@@ -20,9 +20,7 @@ public class TravelDataSource {
     }
 
 
-    public interface changedListener {
-        void change();
-    }
+
 
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
